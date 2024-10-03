@@ -15,6 +15,13 @@
       "when": 1725961155335,
       "tag": "0001_fearless_hawkeye",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1727984106815,
+      "tag": "0002_cooing_king_cobra",
+      "breakpoints": true
     }
   ]
 }
