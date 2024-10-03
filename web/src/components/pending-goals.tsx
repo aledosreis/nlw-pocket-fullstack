@@ -1,8 +1,8 @@
 import { Plus } from 'lucide-react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { OutlineButton } from './ui/outline-button'
-import { getPendingGoals } from '../http/get-pending-goals'
-import { createGoalCompletion } from '../http/create-goal-completion'
+import { getPendingGoals } from '@/http/get-pending-goals'
+import { createGoalCompletion } from '@/http/create-goal-completion'
 
 export function PendingGoals() {
   const queryClient = useQueryClient()

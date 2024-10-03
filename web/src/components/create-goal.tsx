@@ -18,7 +18,7 @@ import {
   RadioGroupIndicator,
   RadioGroupItem,
 } from './ui/radio-group'
-import { createGoal } from '../http/create-goal'
+import { createGoal } from '@/http/create-goal'
 
 const createGoalForm = z.object({
   title: z.string().min(1, 'Informe a atividade que deseja realizar'),
