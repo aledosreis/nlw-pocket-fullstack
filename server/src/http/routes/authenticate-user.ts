@@ -16,13 +16,18 @@ export const authenticateUserRoute: FastifyPluginAsyncZod = async app => {
     async request => {
       const { username, password } = request.body
 
-      const { error } = await authenticateUser({
+      const { token, authenticatedUser, error } = await authenticateUser({
         username,
         password,
       })
 
       if (error) {
         return { error }
+      }
+
+      return {
+        authenticatedUser,
+        token,
       }
     }
   )

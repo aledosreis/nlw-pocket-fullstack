@@ -2,6 +2,8 @@ import { eq } from 'drizzle-orm'
 import { db } from '../db'
 import { users } from '../db/schema'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { env } from '../env'
 
 interface AuthenticateUserRequest {
   username: string
@@ -38,11 +40,13 @@ export async function authenticateUser({
     }
   }
 
+  const token = jwt.sign({ id: user.id }, env.JWT_SECRET)
+
   return {
-    createdUser: {
+    authenticatedUser: {
       username: user.username,
       email: user.email,
-      createdAt: user.createdAt,
     },
+    token,
   }
 }
