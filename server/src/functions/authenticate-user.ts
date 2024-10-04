@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { db } from '../db'
 import { users } from '../db/schema'
+import bcrypt from 'bcrypt'
 
 interface AuthenticateUserRequest {
   username: string
@@ -29,8 +30,9 @@ export async function authenticateUser({
   }
 
   const user = userResponse[0]
+  const isPasswordCorrect = await bcrypt.compare(password, user.password)
 
-  if (password !== user.password) {
+  if (!isPasswordCorrect) {
     return {
       error: 'Wrong password',
     }

@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { db } from '../db'
 import { users } from '../db/schema'
+import bcrypt from 'bcrypt'
 
 interface CreateUserRequest {
   username: string
@@ -45,12 +46,15 @@ export async function createUser({
     }
   }
 
+  const salt = await bcrypt.genSalt(12)
+  const hashPassword = await bcrypt.hash(password, salt)
+
   const result = await db
     .insert(users)
     .values({
       username,
       email,
-      password,
+      password: hashPassword,
     })
     .returning()
 
