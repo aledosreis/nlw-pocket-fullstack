@@ -17,11 +17,15 @@ export const createUserRoute: FastifyPluginAsyncZod = async app => {
     async request => {
       const { username, email, password } = request.body
 
-      await createUser({
+      const { error } = await createUser({
         username,
         email,
         password,
       })
+
+      if (error) {
+        return { error }
+      }
     }
   )
 }
