@@ -5,10 +5,12 @@ import dayjs from 'dayjs'
 
 interface CreateGoalCompletionRequest {
   goalId: string
+  connectedUserId: string
 }
 
 export async function createGoalCompletion({
   goalId,
+  connectedUserId,
 }: CreateGoalCompletionRequest) {
   const firstDayOfWeek = dayjs().startOf('week').toDate()
   const lastDayOfWeek = dayjs().endOf('week').toDate()
@@ -33,6 +35,7 @@ export async function createGoalCompletion({
   const result = await db
     .with(goalCompletionCounts)
     .select({
+      userId: goals.userId,
       desiredWeeklyFrequency: goals.desiredWeeklyFrequency,
       completionCount: sql /*sql*/`
         COALESCE(${goalCompletionCounts.completionCount}, 0)
@@ -43,9 +46,11 @@ export async function createGoalCompletion({
     .where(eq(goals.id, goalId))
     .limit(1)
 
-  const { completionCount, desiredWeeklyFrequency } = result[0]
+  const { completionCount, desiredWeeklyFrequency, userId } = result[0]
 
-  console.log(result)
+  if (userId !== connectedUserId) {
+    throw new Error('Unauthorized!')
+  }
 
   if (completionCount >= desiredWeeklyFrequency) {
     throw new Error('Goal already completed this week!')
@@ -60,5 +65,6 @@ export async function createGoalCompletion({
 
   return {
     goalCompletion,
+    userId,
   }
 }
