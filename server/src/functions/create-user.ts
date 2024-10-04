@@ -58,7 +58,7 @@ export async function createUser({
 
   return {
     createdUser: {
-      username: createdUser.email,
+      username: createdUser.username,
       email: createdUser.email,
       createdAt: createdUser.createdAt,
     },
