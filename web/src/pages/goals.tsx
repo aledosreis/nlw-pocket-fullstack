@@ -8,7 +8,7 @@ import { getSummary } from '@/http/get-summary'
 export function Goals() {
   const { data } = useQuery({
     queryKey: ['summary'],
-    queryFn: getSummary,
+    queryFn: () => getSummary({ userId: 'swnz0ye4cgk1jjta585vbi1p' }),
     staleTime: 1000 * 60, // 60 sec
   })
 

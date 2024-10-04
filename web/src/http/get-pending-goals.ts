@@ -5,8 +5,14 @@ type PendingGoalsResponse = {
   completionCount: number
 }[]
 
-export async function getPendingGoals(): Promise<PendingGoalsResponse> {
-  const response = await fetch('http://localhost:3333/pending-goals')
+type PendingGoalsProps = {
+  userId: string
+}
+
+export async function getPendingGoals({
+  userId,
+}: PendingGoalsProps): Promise<PendingGoalsResponse> {
+  const response = await fetch(`http://localhost:3333/pending-goals/${userId}`)
   const data = await response.json()
 
   return data.pendingGoals

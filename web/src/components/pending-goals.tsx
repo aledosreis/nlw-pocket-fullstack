@@ -9,7 +9,7 @@ export function PendingGoals() {
 
   const { data } = useQuery({
     queryKey: ['pending-goals'],
-    queryFn: getPendingGoals,
+    queryFn: () => getPendingGoals({ userId: 'swnz0ye4cgk1jjta585vbi1p' }),
     staleTime: 1000 * 60, // 60 sec
   })
 
