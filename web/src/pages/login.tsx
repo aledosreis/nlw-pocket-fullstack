@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { authenticateUser } from '@/http/authenticate-user'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { checkAuthUser } from '@/http/check-auth-user'
 
 const loginForm = z.object({
   username: z.string(),
@@ -26,9 +27,10 @@ export function Login() {
     const token = localStorage.getItem('@in.orbit/token')
 
     if (token) {
-      // Buscar informação do usuario logado
-      // navigate('')
-      console.log('Autenticado')
+      checkAuthUser(token)
+        .then(response => {
+          navigate(`/${response.username}`)
+        })
     }
   }, [])
 
