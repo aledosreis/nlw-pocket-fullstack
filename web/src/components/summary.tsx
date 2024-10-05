@@ -11,12 +11,24 @@ import ptBR from 'dayjs/locale/pt-br'
 import { PendingGoals } from './pending-goals'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getUserData } from '@/http/get-user-data'
+import { checkAuthUser } from '@/http/check-auth-user'
+import { useEffect, useState } from 'react'
 
 dayjs.locale(ptBR)
 
 export function Summary() {
   const { username } = useParams()
   const navigate = useNavigate()
+  const [connectedUser, setConnectedUser] = useState()
+
+  useEffect(() => {
+    const token = localStorage.getItem('@in.orbit/token')
+
+    if (token) {
+      checkAuthUser(token)
+        .then(response => setConnectedUser(response))
+    }
+  }, [])
 
   function handleLogout() {
     localStorage.removeItem('@in.orbit/token')
@@ -65,12 +77,16 @@ export function Summary() {
             </span>
           </div>
 
-          <DialogTrigger asChild>
-            <Button size="sm">
-              <Plus className="size-4" />
-              Cadastrar meta
-            </Button>
-          </DialogTrigger>
+          {
+            connectedUser?.username === userData?.username &&
+            (<DialogTrigger asChild>
+              <Button size="sm">
+                <Plus className="size-4" />
+                Cadastrar meta
+              </Button>
+            </DialogTrigger>)
+          }
+          
         </div>
 
         <div className="flex flex-col gap-3">
@@ -91,7 +107,7 @@ export function Summary() {
 
         <Separator />
 
-        <PendingGoals />
+        {connectedUser?.username === userData?.username && <PendingGoals />}
 
         <div className="flex flex-col gap-6">
           <h2 className="text-xl font-medium">Sua semana</h2>

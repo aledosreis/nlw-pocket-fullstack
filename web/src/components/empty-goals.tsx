@@ -6,10 +6,22 @@ import { LogOut, Plus } from 'lucide-react'
 import { getUserData } from '@/http/get-user-data'
 import { useQuery } from '@tanstack/react-query'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { checkAuthUser } from '@/http/check-auth-user'
 
 export function EmptyGoals() {
   const { username } = useParams()
   const navigate = useNavigate()
+  const [connectedUser, setConnectedUser] = useState()
+
+  useEffect(() => {
+    const token = localStorage.getItem('@in.orbit/token')
+
+    if (token) {
+      checkAuthUser(token)
+        .then(response => setConnectedUser(response))
+    }
+  }, [])
 
   function handleLogout() {
     localStorage.removeItem('@in.orbit/token')
@@ -41,12 +53,15 @@ export function EmptyGoals() {
           Você ainda não cadastrou nenhuma meta, que tal cadastrar um agora mesmo?
         </p>
 
-        <DialogTrigger asChild>
-          <Button>
-            <Plus className="size-4" />
-            Cadastrar meta
-          </Button>
-        </DialogTrigger>
+        {
+          connectedUser?.username === userData?.username &&
+          (<DialogTrigger asChild>
+            <Button>
+              <Plus className="size-4" />
+              Cadastrar meta
+            </Button>
+          </DialogTrigger>)
+        }
       </div>
     </div>
   )
