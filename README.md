@@ -58,3 +58,17 @@ npm run dev
 ```
 
 > IMPORTANTE: O comando `npm run seed` insere alguns dados de exemplo no banco de dados, caso deseje iniciar a aplicação sem os dados de exemplo iniciais, basta pular o comando.
+
+## Atualização do projeto
+
+O código desenvolvido durante o evento consta na branch `evento`, onde permanecerá inalterada.
+
+Com o propósito de aprendizado contínuo e aprofundamento, na branch `main` serão implementadas quaisquer melhorias e/ou novas funcionalidades da aplicação.
+
+Modificações realizadas:
+- **Autenticação:** Foi implementado um fluxo de autenticação funcional. Desde a criação e modificação das tabelas necessárias, cripptografia das senhas, consultas no database, rotas públicas e privadas.
+  - > Entende-se que ainda é necessário melhorias no processo de autenticação.
+- **Página de Login e Cadastro:** Foi criada uma página de Login e de Cadastro na aplicação. Além de uma página inicial que é apresentada quando não há usuário logado.
+- **Página de usuário pública:** A página de metas do usuário é pública, podendo ser compartilhada, porém apenas o prórpio usuário pode realizar qualquer ação referente as próprias metas.
+
+> **IMPORTANTE:** Foi criado uma nova variável de ambiente, `JWT_SECRET`, que é necessária para a execução dessa nova versão da aplicação.
