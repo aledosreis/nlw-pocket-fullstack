@@ -2,23 +2,52 @@ import logo from '@/assets/logo-in-orbit.svg'
 import letsStart from '@/assets/lets-start-illustration.svg'
 import { DialogTrigger } from './ui/dialog'
 import { Button } from './ui/button'
-import { Plus } from 'lucide-react'
+import { LogOut, Plus } from 'lucide-react'
+import { getUserData } from '@/http/get-user-data'
+import { useQuery } from '@tanstack/react-query'
+import { useParams, useNavigate } from 'react-router-dom'
 
 export function EmptyGoals() {
-  return (
-    <div className="h-screen flex flex-col items-center justify-center gap-8">
-      <img src={logo} alt="in.orbit" />
-      <img src={letsStart} alt="lets start" />
-      <p className="text-zinc-300 leading-relaxed max-w-80 text-center">
-        Você ainda não cadastrou nenhuma meta, que tal cadastrar um agora mesmo?
-      </p>
+  const { username } = useParams()
+  const navigate = useNavigate()
 
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="size-4" />
-          Cadastrar meta
+  function handleLogout() {
+    localStorage.removeItem('@in.orbit/token')
+    navigate('/')
+  }
+
+  const { data: userData } = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData({ username: username! }),
+    staleTime: 1000 * 60, // 60 sec
+  })
+  
+  return (
+    <div className='w-screen'>
+      <div className='px-10 pt-4 flex justify-between items-center absolute w-full'>
+        <span className='text-lg font-semibold'>
+          {userData?.username}{' '}
+          <span className='text-base font-normal text-zinc-400'>({userData?.email})</span>
+        </span>
+        <Button size='sm' onClick={handleLogout}>
+          <LogOut className='size-4' />
+          Sair
         </Button>
-      </DialogTrigger>
+      </div>
+      <div className="h-screen flex flex-col items-center justify-center gap-8">
+        <img src={logo} alt="in.orbit" />
+        <img src={letsStart} alt="lets start" />
+        <p className="text-zinc-300 leading-relaxed max-w-80 text-center">
+          Você ainda não cadastrou nenhuma meta, que tal cadastrar um agora mesmo?
+        </p>
+
+        <DialogTrigger asChild>
+          <Button>
+            <Plus className="size-4" />
+            Cadastrar meta
+          </Button>
+        </DialogTrigger>
+      </div>
     </div>
   )
 }
