@@ -1,7 +1,5 @@
-import { Goals } from '@/pages/goals'
-import { Login } from './pages/login'
-import { Register } from './pages/register'
+import { Router } from './routes'
 
 export function App() {
-  return <Register />
+  return <Router />
 }
