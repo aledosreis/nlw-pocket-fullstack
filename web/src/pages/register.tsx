@@ -9,6 +9,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { registerUser } from '@/http/register-user'
+import { UserPlus } from 'lucide-react'
 
 const registerForm = z.object({
   username: z.string().min(3, 'Mínimo de 3 caracteres'),
@@ -90,7 +91,10 @@ export function Register() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Button className="flex-1">Cadastrar</Button>
+            <Button className="flex flex-1 gap-3 items-center">
+              <UserPlus className='size-4' />
+              Cadastrar
+            </Button>
           </div>
         </form>
       </div>

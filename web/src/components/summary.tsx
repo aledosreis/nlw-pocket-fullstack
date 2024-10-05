@@ -63,10 +63,11 @@ export function Summary() {
           {userData?.username}{' '}
           <span className='text-base font-normal text-zinc-400'>({userData?.email})</span>
         </span>
+        {connectedUser && (
         <Button size='sm' onClick={handleLogout}>
           <LogOut className='size-4' />
           Sair
-        </Button>
+        </Button>)}
       </div>
       <div className="py-10 max-w-[480px] px-5 mx-auto flex flex-col gap-6">
         <div className="flex items-center justify-between">

@@ -41,10 +41,11 @@ export function EmptyGoals() {
           {userData?.username}{' '}
           <span className='text-base font-normal text-zinc-400'>({userData?.email})</span>
         </span>
+        {connectedUser && (
         <Button size='sm' onClick={handleLogout}>
           <LogOut className='size-4' />
           Sair
-        </Button>
+        </Button>)}
       </div>
       <div className="h-screen flex flex-col items-center justify-center gap-8">
         <img src={logo} alt="in.orbit" />

@@ -1,5 +1,6 @@
 import { InOrbitIcon } from "@/components/in-orbit-icon";
 import { checkAuthUser } from "@/http/check-auth-user";
+import { LogIn, UserPlus } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -28,9 +29,15 @@ export function Landing() {
         <span className="text-lg font-medium">Registre e controle suas metas semanais</span>
 
         <div className="flex justify-between items-center">
-          <Link to='/login' className="flex items-center justify-center gap-2 rounded-lg text-sm font-medium tracking-tight outline-none ring-offset-2 ring-offset-black focus-visible:ring-2 bg-violet-500 text-violet-50 hover:bg-violet-600 ring-violet-500 px-4 py-2.5">Faça seu login</Link>
+          <Link to='/login' className="flex items-center justify-center gap-2 rounded-lg text-sm font-medium tracking-tight outline-none ring-offset-2 ring-offset-black focus-visible:ring-2 bg-violet-500 text-violet-50 hover:bg-violet-600 ring-violet-500 px-4 py-2.5">
+            <LogIn className="size-4" />
+            Faça seu login
+          </Link>
           <span className="text-zinc-400 text-sm">-- OU --</span>
-          <Link to='/register' className="flex items-center justify-center gap-2 rounded-lg text-sm font-medium tracking-tight outline-none ring-offset-2 ring-offset-black focus-visible:ring-2 bg-violet-500 text-violet-50 hover:bg-violet-600 ring-violet-500 px-4 py-2.5">Cadastre-se</Link>
+          <Link to='/register' className="flex items-center justify-center gap-2 rounded-lg text-sm font-medium tracking-tight outline-none ring-offset-2 ring-offset-black focus-visible:ring-2 bg-violet-500 text-violet-50 hover:bg-violet-600 ring-violet-500 px-4 py-2.5">
+            <UserPlus className="size-4" />
+            Cadastre-se
+          </Link>
         </div>
       </div>
     </div>

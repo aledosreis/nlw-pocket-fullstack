@@ -9,6 +9,7 @@ import { authenticateUser } from '@/http/authenticate-user'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { checkAuthUser } from '@/http/check-auth-user'
+import { LogIn } from 'lucide-react'
 
 const loginForm = z.object({
   username: z.string(),
@@ -79,7 +80,10 @@ export function Login() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Button className="flex-1">Login</Button>
+            <Button className="flex flex-1 gap-3 items-center">
+              <LogIn className='size-4' />
+              Login
+            </Button>
           </div>
         </form>
       </div>
