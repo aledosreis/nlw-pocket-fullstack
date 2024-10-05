@@ -9,13 +9,23 @@ import { getSummary } from '@/http/get-summary'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 import { PendingGoals } from './pending-goals'
+import { useParams } from 'react-router-dom'
+import { getUserData } from '@/http/get-user-data'
 
 dayjs.locale(ptBR)
 
 export function Summary() {
+  const { username } = useParams()
+
+  const { data: userData } = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData({ username: username! }),
+    staleTime: 1000 * 60, // 60 sec
+  })
+
   const { data } = useQuery({
     queryKey: ['summary'],
-    queryFn: () => getSummary({ userId: 'swnz0ye4cgk1jjta585vbi1p' }),
+    queryFn: () => getSummary({ userId: userData!.id }),
     staleTime: 1000 * 60, // 60 sec
   })
 

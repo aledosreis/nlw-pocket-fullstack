@@ -3,13 +3,23 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { OutlineButton } from './ui/outline-button'
 import { getPendingGoals } from '@/http/get-pending-goals'
 import { createGoalCompletion } from '@/http/create-goal-completion'
+import { useParams } from 'react-router-dom'
+import { getUserData } from '@/http/get-user-data'
 
 export function PendingGoals() {
   const queryClient = useQueryClient()
 
+  const { username } = useParams()
+
+  const { data: userData } = useQuery({
+    queryKey: ['userData'],
+    queryFn: () => getUserData({ username: username! }),
+    staleTime: 1000 * 60, // 60 sec
+  })
+
   const { data } = useQuery({
     queryKey: ['pending-goals'],
-    queryFn: () => getPendingGoals({ userId: 'swnz0ye4cgk1jjta585vbi1p' }),
+    queryFn: () => getPendingGoals({ userId: userData!.id }),
     staleTime: 1000 * 60, // 60 sec
   })
 
@@ -18,7 +28,8 @@ export function PendingGoals() {
   }
 
   async function handleCompleteGoal(goalId: string) {
-    await createGoalCompletion(goalId)
+    const token = localStorage.getItem('@in.orbit/token')
+    await createGoalCompletion(goalId, token!)
 
     queryClient.invalidateQueries({ queryKey: ['summary'] })
     queryClient.invalidateQueries({ queryKey: ['pending-goals'] })

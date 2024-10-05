@@ -36,9 +36,12 @@ export function CreateGoal() {
     })
 
   async function handleCreateGoal(data: CreateGoalForm) {
+    const token = localStorage.getItem('@in.orbit/token')
+
     await createGoal({
       title: data.title,
       desiredWeeklyFrequency: data.desiredWeeklyFrequency,
+      token: token!
     })
 
     queryClient.invalidateQueries({ queryKey: ['summary'] })

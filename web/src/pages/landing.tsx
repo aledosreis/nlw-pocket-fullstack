@@ -1,7 +1,22 @@
 import { InOrbitIcon } from "@/components/in-orbit-icon";
-import { Link } from "react-router-dom";
+import { checkAuthUser } from "@/http/check-auth-user";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Landing() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const token = localStorage.getItem('@in.orbit/token')
+
+    if (token) {
+      checkAuthUser(token)
+        .then(response => {
+          navigate(`/${response.username}`)
+        })
+    }
+  }, [])
+  
   return (
     <div className="h-screen w-screen flex items-center justify-center">
       <div className="flex flex-col gap-6 max-w-[480px]">

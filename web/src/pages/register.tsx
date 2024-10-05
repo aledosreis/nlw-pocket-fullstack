@@ -2,8 +2,24 @@ import { Button } from '@/components/ui/button'
 import { InOrbitIcon } from '@/components/in-orbit-icon'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
+import { useNavigate } from 'react-router-dom'
+import { checkAuthUser } from '@/http/check-auth-user'
+import { useEffect } from 'react'
 
 export function Register() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const token = localStorage.getItem('@in.orbit/token')
+
+    if (token) {
+      checkAuthUser(token)
+        .then(response => {
+          navigate(`/${response.username}`)
+        })
+    }
+  }, [])
+  
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="py-10 max-w-[480px] w-full flex flex-col gap-6">

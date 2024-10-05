@@ -12,6 +12,7 @@ import fastifyCors from '@fastify/cors'
 import { createUserRoute } from './routes/create-user'
 import { authenticateUserRoute } from './routes/authenticate-user'
 import { checkAuthUserRoute } from './routes/check-authentication'
+import { getUserDataRoute } from './routes/get-user-data'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -30,6 +31,8 @@ app.register(getWeekSummaryRoute)
 app.register(createUserRoute)
 app.register(authenticateUserRoute)
 app.register(checkAuthUserRoute)
+
+app.register(getUserDataRoute)
 
 app
   .listen({
